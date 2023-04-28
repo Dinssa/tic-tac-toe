@@ -21,6 +21,10 @@ body {
     justify-content: center;
     align-items: center;
     background-color: var(--lime-green);
+    -webkit-user-select: none;
+     -moz-user-select: none;
+     -ms-user-select: none;
+     user-select: none;
 }
 
 header {
@@ -32,7 +36,7 @@ header {
 
 h1 {
     color: var(--light-brown);
-    font-size: 3vmin;
+    font-size: 3.2vmin;
 }
 
 #board {

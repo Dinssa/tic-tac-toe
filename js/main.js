@@ -15,8 +15,8 @@ const messageEl = document.getElementById('message');
 const resetGameBtn = document.getElementById('reset-game');
   
 /*----- event listeners -----*/
-// document.getElementById('board').addEventListener('click', handleDrop);
-// resetGameBtn.addEventListener('click', init);
+document.getElementById('board').addEventListener('click', handleDrop);
+resetGameBtn.addEventListener('click', init);
   
 /*----- functions -----*/
 init();
@@ -32,9 +32,63 @@ function init() {
     render();
 }
 
-// function handleDrop(e){
+function handleDrop(e){
+    colIdx = parseInt(e.target.id.charAt(1));
+    rowIdx = parseInt(e.target.id.charAt(3));
+    if (isNaN(colIdx) || isNaN(rowIdx) || winner) return;
+    board[colIdx][rowIdx] = turn;
+    turn *= -1;
+    winner = getWinner(colIdx, rowIdx);
+    render();
+}
 
-// }
+function getWinner(colIdx, rowIdx){
+    return checkVerticalWin(colIdx, rowIdx) || checkHorizontalWin(colIdx, rowIdx) || checkDiagonalWin(colIdx, rowIdx) || checkTie();
+}
+
+function checkVerticalWin(colIdx, rowIdx) {
+    const adjCountUp = countAdjacent(colIdx, rowIdx, 0, 1);
+    const adjCountDown = countAdjacent(colIdx, rowIdx, 0, -1);
+    return (adjCountUp + adjCountDown) === 2 ? board[colIdx][rowIdx] : null;
+}
+
+function checkHorizontalWin(colIdx, rowIdx) {
+    const adjCountLeft = countAdjacent(colIdx, rowIdx, -1, 0);
+    const adjCountRight = countAdjacent(colIdx, rowIdx, 1, 0);
+    return (adjCountLeft + adjCountRight) === 2 ? board[colIdx][rowIdx] : null;
+}
+
+function checkDiagonalWin(colIdx, rowIdx) {
+    // Win direction: "/"
+    const adjCountNE = countAdjacent(colIdx, rowIdx, 1, 1);
+    const adjCountSW = countAdjacent(colIdx, rowIdx, -1, -1);
+    // Win direction: "\"
+    const adjCountNW = countAdjacent(colIdx, rowIdx, -1, 1);
+    const adjCountSE = countAdjacent(colIdx, rowIdx, 1, -1);
+    return (adjCountNE + adjCountSW) === 2 || (adjCountNW + adjCountSE) === 2 ? board[colIdx][rowIdx] : null;
+  }
+
+function checkTie(){
+    return board.every(col => col.every(cell => cell !== 0)) ? 'T' : null;
+}
+
+function countAdjacent(colIdx, rowIdx, colOffset, rowOffset){
+    const player = board[colIdx][rowIdx];
+    let count = 0;
+    colIdx += colOffset;
+    rowIdx += rowOffset;
+    
+    while (
+        board[colIdx] !== undefined &&
+        board[colIdx][rowIdx] !== undefined &&
+        board[colIdx][rowIdx] === player
+    ) {
+        count++;
+        colIdx += colOffset;
+        rowIdx += rowOffset;
+    }
+    return count;
+}
 
 function render(){
     renderBoard();
@@ -49,7 +103,7 @@ function renderBoard(){
           const cellEl = document.getElementById(cellId);
           cellEl.innerHTML = TILE[cellVal];
           if (cellVal) cellEl.getElementsByTagName('span')[0].style.fontSize = cellVal === 1 ? '25vmin' : '19vmin';
-          cellVal ? cellEl.classList.remove('playable') : cellEl.classList.add('playable');
+          cellVal || winner ? cellEl.classList.remove('playable') : cellEl.classList.add('playable');
         });
     });
 }
@@ -58,9 +112,9 @@ function renderMessage(){
     if (winner === 'T'){
         messageEl.innerText = "It's a Tie";
     } else if (winner) {
-        messageEl.innerHTML = `${TILE[winner]} Wins`
+        messageEl.innerHTML = `${TILE[winner]} Wins`;
     } else {
-        messageEl.innerHTML = `${TILE[turn]} 's Turn`
+        messageEl.innerHTML = `${TILE[turn]} 's Turn`;
     }
 }
 
