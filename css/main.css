@@ -10,9 +10,9 @@
 
 * {
     box-sizing: border-box;
-  }
+}
   
-  body {
+body {
     height: 100vh;
     margin: 0;
     font-family: 'Raleway', sans-serif;
@@ -21,37 +21,40 @@
     justify-content: center;
     align-items: center;
     background-color: var(--lime-green);
-  }
-  
-  header {
+}
+
+header {
     font-size: 6vmin;
     color: var(--brown);
     font-weight: 300;
     letter-spacing: 1vmin;
-  }
-  
-  h1 {
+}
+
+h1 {
     color: var(--light-brown);
     font-size: 3vmin;
-  }
-  
-  #board {
+}
+
+#board {
     display: grid;
     grid-template-columns: repeat(3, 20vmin);
     grid-template-rows: repeat(3, 20vmin);
     gap: 1vmin;
-  }
-  
-  #board>div {
-    border: 0.1vmin solid var(--light-brown);
-  }
+}
 
-  #board>div.active:hover {
+#board>div {
+    border: 0.1vmin solid var(--light-brown);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#board>div.playable:hover {
     background-color: var(--brown);
     cursor: pointer;
-  }
-  
-  button {
+}
+
+button {
     margin-top: 4vmin;
     padding: 2vmin;
     font-size: 2vmin;
@@ -61,9 +64,14 @@
     background-color: var(--soft-orange);
     font-family: 'Raleway', sans-serif;
     cursor: pointer;
-  }
+}
   
-  button:hover {
+button:hover {
     color: white;
     background-color: var(--brown);
-  }
+}
+
+#message {
+    display: flex;
+    justify-content: center;
+}
