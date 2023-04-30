@@ -1,4 +1,6 @@
-![GitHub](https://img.shields.io/github/license/dinssa/tic-tac-toe?logo=Unlicense) ![GitHub release (latest by date)](https://img.shields.io/github/v/release/dinssa/tic-tac-toe?display_name=tag) ![Website](https://img.shields.io/website?up_message=yabg.xyz&url=https%3A%2F%2Fyabg.xyz%2Ftictactoe.html)
+[![GitHub](https://img.shields.io/github/license/dinssa/tic-tac-toe?logo=Unlicense)](#)
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/dinssa/tic-tac-toe?display_name=tag)](#)
+[![Website](https://img.shields.io/website?up_message=yabg.xyz&url=https%3A%2F%2Fyabg.xyz%2Ftictactoe.html)](#)
 # Tic Tac Toe
 Tic Tac Toe is a game that challenges your logic and strategy skills. The game is played on a 3x3 grid, where you and your opponent take turns placing Xs and Os. The goal is to get three of your symbols in a row, either horizontally, vertically, or diagonally, before your opponent does. 
 
