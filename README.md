@@ -12,7 +12,7 @@ This Tic Tac Toe repository is my execution of building a simple browser game wr
 <p align="center">
 Check this game out on Yet Another Browser Game (yabg.xyz)
 <br>
-  <a target="_blank" href="https://yabg.xyz/tictactoe.html"><strong>yabg.xyx/TicTacToe</strong> 🗗</a>
+  <a href="https://yabg.xyz/tictactoe.html" target="_blank"><strong>yabg.xyx/TicTacToe</strong> 🗗</a>
 </p>
 
 ## Installation
