@@ -1,8 +1,8 @@
 /*----- constants -----*/
 const TILE = {
     null: '',
-    '1': '<span class="material-symbols-outlined" style="font-size : 4vmin; color: var(--strong-cyan)">close</span>',
-    '-1': '<span class="material-symbols-outlined" style="font-size : 4vmin; color: var(--bright-orange)">radio_button_unchecked</span>'
+    '1': '<span class="material-symbols-outlined player cross" style="color: var(--strong-cyan)">close</span>',
+    '-1': '<span class="material-symbols-outlined player circle" style="color: var(--bright-orange)">radio_button_unchecked</span>'
   };
 
 const WINNING_COMBOS = [
@@ -75,7 +75,6 @@ function renderBoard(){
         const cellId = `t${tileIdx}`;
         const cellEl = document.getElementById(cellId);
         cellEl.innerHTML = TILE[tileVal];
-        if (tileVal) cellEl.getElementsByTagName('span')[0].style.fontSize = tileVal === 1 ? '25vmin' : '19vmin';
         tileVal || winner ? cellEl.classList.remove('playable') : cellEl.classList.add('playable');
     });
 }
@@ -84,7 +83,7 @@ function renderMessage(){
     if (winner === null){
         messageEl.innerHTML = `${TILE[turn]} 's Turn`;
     } else if (winner === 'T'){
-        messageEl.innerHTML = "<span style='font-size : 3.4vmin;'>It's a Tie</span>";
+        messageEl.innerHTML = "<span class='tie'>It's a Tie</span>";
     } else {
         messageEl.innerHTML = `${TILE[winner]} Wins`;
     }

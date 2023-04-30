@@ -39,6 +39,14 @@ h1 {
     font-size: 3.2vmin;
 }
 
+#message > span.player {
+    font-size: 4vmin;
+}
+
+#message > span.tie {
+    font-size: 3.4vmin;
+}
+
 #board {
     display: grid;
     grid-template-columns: repeat(3, 20vmin);
@@ -56,6 +64,14 @@ h1 {
 #board>div.playable:hover {
     background-color: var(--brown);
     cursor: pointer;
+}
+
+div > .cross {
+    font-size: 25vmin;
+}
+
+div > .circle {
+    font-size: 19vmin;
 }
 
 button {
@@ -79,3 +95,34 @@ button:hover {
     display: flex;
     justify-content: center;
 }
+
+@media screen and (max-width: 800px) {
+    header {
+        font-size: 8vmin;
+    }
+    h1 {
+        font-size: 7vmin;
+    }
+    #message > span.player {
+        font-size: 9vmin;
+    }
+    
+    #message > span.tie {
+        font-size: 7.8vmin;
+    }
+    #board {
+        grid-template-columns: repeat(3, 25vmin);
+        grid-template-rows: repeat(3, 25vmin);
+        gap: 1.5vmin;
+    } 
+    div > .cross {
+        font-size: 31vmin;
+    }
+    div > .circle {
+        font-size: 24vmin;
+    }
+    button {
+        margin-top: 10vmin;
+        transform: scale(2);
+    }
+  }
