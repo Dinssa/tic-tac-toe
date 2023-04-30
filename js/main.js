@@ -1,10 +1,21 @@
 /*----- constants -----*/
 const TILE = {
-    '0': '',
+    null: '',
     '1': '<span class="material-symbols-outlined" style="font-size : 4vmin; color: var(--strong-cyan)">close</span>',
     '-1': '<span class="material-symbols-outlined" style="font-size : 4vmin; color: var(--bright-orange)">radio_button_unchecked</span>'
   };
-  
+
+const WINNING_COMBOS = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6]
+]
+
 /*----- state variables -----*/
 let board; // array of 7 column arrays
 let turn; // 1 or -1 for player 1 or player 2
@@ -22,72 +33,35 @@ resetGameBtn.addEventListener('click', init);
 init();
 
 function init() {
-    board = [
-        [0,0,0], // col 0
-        [0,0,0], // col 1
-        [0,0,0], // col 2
-    ];
+    board = [null,null,null,null,null,null,null,null,null];
     turn = 1;
     winner = null;
     render();
 }
 
 function handleDrop(e){
-    colIdx = parseInt(e.target.id.charAt(1));
-    rowIdx = parseInt(e.target.id.charAt(3));
-    if (isNaN(colIdx) || isNaN(rowIdx) || winner) return;
-    board[colIdx][rowIdx] = turn;
+    tileIdx = parseInt(e.target.id.charAt(1));
+    if (isNaN(tileIdx) || winner || board[tileIdx]) return;
+    console.log(board);
+    board[tileIdx] = turn;
     turn *= -1;
-    winner = getWinner(colIdx, rowIdx);
+    winner = getWinner(tileIdx);
     render();
 }
 
-function getWinner(colIdx, rowIdx){
-    return checkVerticalWin(colIdx, rowIdx) || checkHorizontalWin(colIdx, rowIdx) || checkDiagonalWin(colIdx, rowIdx) || checkTie();
+function getWinner(tileIdx){
+    return checkCombos(tileIdx) || checkTie();
 }
 
-function checkVerticalWin(colIdx, rowIdx) {
-    const adjCountUp = countAdjacent(colIdx, rowIdx, 0, 1);
-    const adjCountDown = countAdjacent(colIdx, rowIdx, 0, -1);
-    return (adjCountUp + adjCountDown) === 2 ? board[colIdx][rowIdx] : null;
+function checkCombos(tileIdx) {
+    for (i = 0; i < WINNING_COMBOS.length; i++){
+        combo = WINNING_COMBOS[i];
+        if (Math.abs(board[combo[0]] + board[combo[1]] + board[combo[2]]) === 3) return board[tileIdx];
+    }
 }
-
-function checkHorizontalWin(colIdx, rowIdx) {
-    const adjCountLeft = countAdjacent(colIdx, rowIdx, -1, 0);
-    const adjCountRight = countAdjacent(colIdx, rowIdx, 1, 0);
-    return (adjCountLeft + adjCountRight) === 2 ? board[colIdx][rowIdx] : null;
-}
-
-function checkDiagonalWin(colIdx, rowIdx) {
-    // Win direction: "/"
-    const adjCountNE = countAdjacent(colIdx, rowIdx, 1, 1);
-    const adjCountSW = countAdjacent(colIdx, rowIdx, -1, -1);
-    // Win direction: "\"
-    const adjCountNW = countAdjacent(colIdx, rowIdx, -1, 1);
-    const adjCountSE = countAdjacent(colIdx, rowIdx, 1, -1);
-    return (adjCountNE + adjCountSW) === 2 || (adjCountNW + adjCountSE) === 2 ? board[colIdx][rowIdx] : null;
-  }
 
 function checkTie(){
-    return board.every(col => col.every(cell => cell !== 0)) ? 'T' : null;
-}
-
-function countAdjacent(colIdx, rowIdx, colOffset, rowOffset){
-    const player = board[colIdx][rowIdx];
-    let count = 0;
-    colIdx += colOffset;
-    rowIdx += rowOffset;
-    
-    while (
-        board[colIdx] !== undefined &&
-        board[colIdx][rowIdx] !== undefined &&
-        board[colIdx][rowIdx] === player
-    ) {
-        count++;
-        colIdx += colOffset;
-        rowIdx += rowOffset;
-    }
-    return count;
+    return board.every(tile => tile !== null) ? 'T' : null;
 }
 
 function render(){
@@ -97,24 +71,22 @@ function render(){
 }
 
 function renderBoard(){
-    board.forEach(function(colArr, colIdx) {
-        colArr.forEach(function(cellVal, rowIdx) {
-          const cellId = `c${colIdx}r${rowIdx}`;
-          const cellEl = document.getElementById(cellId);
-          cellEl.innerHTML = TILE[cellVal];
-          if (cellVal) cellEl.getElementsByTagName('span')[0].style.fontSize = cellVal === 1 ? '25vmin' : '19vmin';
-          cellVal || winner ? cellEl.classList.remove('playable') : cellEl.classList.add('playable');
-        });
+    board.forEach(function(tileVal, tileIdx) {
+        const cellId = `t${tileIdx}`;
+        const cellEl = document.getElementById(cellId);
+        cellEl.innerHTML = TILE[tileVal];
+        if (tileVal) cellEl.getElementsByTagName('span')[0].style.fontSize = tileVal === 1 ? '25vmin' : '19vmin';
+        tileVal || winner ? cellEl.classList.remove('playable') : cellEl.classList.add('playable');
     });
 }
 
 function renderMessage(){
-    if (winner === 'T'){
-        messageEl.innerText = "It's a Tie";
-    } else if (winner) {
-        messageEl.innerHTML = `${TILE[winner]} Wins`;
-    } else {
+    if (winner === null){
         messageEl.innerHTML = `${TILE[turn]} 's Turn`;
+    } else if (winner === 'T'){
+        messageEl.innerHTML = "<span style='font-size : 3.4vmin;'>It's a Tie</span>";
+    } else {
+        messageEl.innerHTML = `${TILE[winner]} Wins`;
     }
 }
 
