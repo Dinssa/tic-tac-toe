@@ -42,7 +42,6 @@ function init() {
 function handleDrop(e){
     tileIdx = parseInt(e.target.id.charAt(1));
     if (isNaN(tileIdx) || winner || board[tileIdx]) return;
-    console.log(board);
     board[tileIdx] = turn;
     turn *= -1;
     winner = getWinner(tileIdx);
