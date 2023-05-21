@@ -17,4 +17,4 @@ Check out this game on Github Pages
 
 ## Installation
 - Clone the repo: `git clone https://github.com/Dinssa/tic-tac-toe.git`
-- Open `tictactoe.html` in your favorite browser
+- Open `index.html` in your favorite browser
