@@ -10,9 +10,9 @@ This Tic Tac Toe repository is my execution of building a simple browser game wr
 ## Live Preview
 ![Mockups on Laptop and Mobile](https://i.imgur.com/m2eQBSu.png "Preview")
 <p align="center">
-Check this game out on Yet Another Browser Game (yabg.xyz)
+Check out this game on Github Pages
 <br>
-  <a href="https://yabg.xyz/tictactoe.html"><strong>yabg.xyx/TicTacToe</strong></a>
+  <a href="https://dinssa.github.io/tic-tac-toe/"><strong>dinssa.github.io/tic-tac-toe</strong></a>
 </p>
 
 ## Installation
